@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Today's Workout Plan</title>
-    <!-- Include Bootstrap CSS for styling -->
+    <title>Today's Workout</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -31,6 +30,8 @@
         }
         .exercise-item {
             margin-bottom: 10px;
+            display: flex;
+            align-items: center;
         }
         .exercise-item span {
             font-weight: bold;
@@ -46,14 +47,20 @@
 <body>
     <div class="container">
         <div class="workout-card">
-            <h1>Today's Workout Plan</h1>
+            <h1>Today's Workout</h1>
             <h2 class="day-title">{{ today }}</h2>
-            <h3>Your workout is:</h3>
-            <ul class="exercise-list">
-                {% for category, details in workout_plan.items() %}
-                <li class="exercise-item"><span>{{ category }}:</span> {{ details }}</li>
-                {% endfor %}
-            </ul>
+            <form method="post" action="{{ url_for('end_of_day_checkin') }}">
+                <h3>Your workout is:</h3>
+                <ul class="exercise-list">
+                    {% for category, details in workout_plan.items() %}
+                    <li class="exercise-item">
+                        <input type="checkbox" name="completed" value="{{ category }}">
+                        <span>{{ category }}:</span> {{ details }}
+                    </li>
+                    {% endfor %}
+                </ul>
+                <a href="{{ url_for('end_of_day_checkin') }}" class="btn btn-secondary">Check In</a>
+            </form>
         </div>
     </div>
 </body>

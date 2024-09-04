@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Today's Workout Check In</title>
-    <!-- Include Bootstrap CSS for styling -->
+    <title>End of Day Check In</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -48,7 +47,7 @@
 <body>
     <div class="container">
         <div class="workout-card">
-            <h1>Today's Workout Check In</h1>
+            <h1>End of Day Check In</h1>
             <h2 class="day-title">{{ today }}</h2>
             <form method="post">
                 <h3>Your workout is:</h3>
@@ -60,8 +59,9 @@
                     </li>
                     {% endfor %}
                 </ul>
-                <button type="submit" class="btn btn-primary">Update Status</button>
+                <button type="submit" class="btn btn-primary">Submit Check-In</button>
             </form>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary mt-3">Go back to today's workout</a>
         </div>
     </div>
 </body>
