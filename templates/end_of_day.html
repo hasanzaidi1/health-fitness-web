@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Today's Workout Check In</title>
+    <!-- Include Bootstrap CSS for styling -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .workout-card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .exercise-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .exercise-item {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .exercise-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .day-title {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="workout-card">
+            <h1>Today's Workout Check In</h1>
+            <h2 class="day-title">{{ today }}</h2>
+            <form method="post">
+                <h3>Your workout is:</h3>
+                <ul class="exercise-list">
+                    {% for category, details in workout_plan.items() %}
+                    <li class="exercise-item">
+                        <input type="checkbox" name="completed_workouts" value="{{ category }}" {% if category in completed_workouts %}checked{% endif %}>
+                        <span>{{ category }}:</span> {{ details }}
+                    </li>
+                    {% endfor %}
+                </ul>
+                <button type="submit" class="btn btn-primary">Update Status</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
