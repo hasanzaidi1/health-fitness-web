@@ -54,7 +54,7 @@
                 <ul class="exercise-list">
                     {% for category, details in workout_plan.items() %}
                     <li class="exercise-item">
-                        <input type="checkbox" name="completed" value="{{ category }}">
+{#                        <input type="checkbox" name="completed" value="{{ category }}">#}
                         <span>{{ category }}:</span> {{ details }}
                     </li>
                     {% endfor %}
