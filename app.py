@@ -43,7 +43,7 @@ def get_todays_workout():
 
 def is_end_of_day():
     current_time = datetime.datetime.now().time()
-    return current_time >= datetime.time(9, 30)
+    return current_time >= datetime.time(20, 30)
 
 
 @app.route('/')
