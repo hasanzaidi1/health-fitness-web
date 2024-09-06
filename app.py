@@ -12,7 +12,9 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)  # Securely generated secret key
 
 # MongoDB connection
-mongo_uri = "mongodb+srv://hassanzaidi0122:privacy714@cluster0.nqhin.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+mongo_uri = os.getenv("MONGO_URI")
+if not mongo_uri:
+    raise ValueError("No MongoDB URI found in environment variables.")
 client = pymongo.MongoClient(mongo_uri)
 db = client['Health_Fitness_app']  # Replace 'workout_db' with your desired database name
 skipped_collection = db['workoutStatus']  # Collection for storing skipped exercises
