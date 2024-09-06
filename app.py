@@ -41,12 +41,13 @@ def is_end_of_day():
     current_time = datetime.datetime.now().time()
     return current_time >= datetime.time(20, 30)
 
+# Global Variable declaration for workout
+today, workout_plan = get_todays_workout()
 @app.route('/')
 def index():
     if is_end_of_day():
         return redirect(url_for('end_of_day_checkin'))
 
-    today, workout_plan = get_todays_workout()
     return render_template('index.html', today=today, workout_plan=workout_plan)
 
 @app.route('/end_of_day', methods=['GET', 'POST'])
@@ -57,7 +58,6 @@ def end_of_day_checkin():
         flash("Your check-in has been recorded!")
         return redirect(url_for('index'))
 
-    today, workout_plan = get_todays_workout()
     # Here, you should pass completed_exercises to keep the checkboxes checked
     completed_exercises = request.form.getlist('completed_workouts')
     return render_template('end_of_day.html', today=today, workout_plan=workout_plan, completed_workouts=completed_exercises)
