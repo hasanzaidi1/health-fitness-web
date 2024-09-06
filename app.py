@@ -6,9 +6,16 @@ from exercises.legDay import LegsWorkout
 from exercises.biceps import Biceps
 from exercises.shoulders import Shoulders
 import os
+import pymongo
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)  # Securely generated secret key
+
+# MongoDB connection
+mongo_uri = "mongodb+srv://hassanzaidi0122:privacy714@cluster0.nqhin.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+client = pymongo.MongoClient(mongo_uri)
+db = client['Health_Fitness_app']  # Replace 'workout_db' with your desired database name
+skipped_collection = db['workoutStatus']  # Collection for storing skipped exercises
 
 def get_todays_workout():
     day_of_week = datetime.datetime.now().strftime("%A")
@@ -43,6 +50,7 @@ def is_end_of_day():
 
 # Global Variable declaration for workout
 today, workout_plan = get_todays_workout()
+
 @app.route('/')
 def index():
     if is_end_of_day():
@@ -53,12 +61,27 @@ def index():
 @app.route('/end_of_day', methods=['GET', 'POST'])
 def end_of_day_checkin():
     if request.method == 'POST':
-        completed_exercises = request.form.getlist('completed_workouts')
-        # Save completed_exercises to session or database if needed
+        completed_exercises = request.form.getlist('completed_workouts')  # Get the list of completed exercises
+
+        # Determine the skipped exercises by comparing the full workout plan with completed ones
+        skipped_exercises = [exercise for exercise in workout_plan.keys() if exercise not in completed_exercises]
+
+        # If there are skipped exercises, insert them into MongoDB
+        if skipped_exercises:
+            skipped_entry = {
+                "date": datetime.datetime.now(),
+                "day": today,
+                "skipped_exercises": skipped_exercises
+            }
+            skipped_collection.insert_one(skipped_entry)  # Insert the skipped exercises into MongoDB
+            flash("Skipped exercises have been recorded.")
+
+        # Flash message for successful check-in
         flash("Your check-in has been recorded!")
         return redirect(url_for('index'))
 
-    # Here, you should pass completed_exercises to keep the checkboxes checked
+
+    # Render end of day check-in page
     completed_exercises = request.form.getlist('completed_workouts')
     return render_template('end_of_day.html', today=today, workout_plan=workout_plan, completed_workouts=completed_exercises)
 
