@@ -4,6 +4,7 @@ from exercises.pullDay import PullDay
 from exercises.pushDay import PushDay
 from exercises.legDay import LegsWorkout
 from exercises.biceps import Biceps
+from exercises.abs import Abs
 from exercises.shoulders import Shoulders
 import os
 
@@ -18,6 +19,7 @@ def get_todays_workout():
         "Wednesday": LegsWorkout(),
         "Thursday": PushDay(),
         "Friday": Shoulders(),
+        "Saturday": Abs()
     }
 
     workout_plan = workout_plans.get(day_of_week, None)
@@ -32,6 +34,8 @@ def get_todays_workout():
             plan = workout_plan.pushDay()
         elif day_of_week == "Friday":
             plan = workout_plan.shoulderDay()
+        elif day_of_week == "Saturday":
+            plan = workout_plan.abs()
         else:
             plan = {}
         return day_of_week, plan

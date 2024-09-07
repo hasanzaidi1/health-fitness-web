@@ -49,23 +49,26 @@ class Abs(object):
         return f"{random_key} - {random_value}"
 
     def abs(self):
-
         # Clone the dictionaries so the original ones are not modified
         sideObliques_copy = self.sideObliques.copy()
         lowerAbs_copy = self.lowerAbs.copy()
         upperAbs_copy = self.upperAbs.copy()
-        absHIIT_copy = self.absWO.copy()
+        absHIIT_copy = self.absHIIT.copy()
 
-        sideObliques1 = self.returnExercise(sideObliques_copy)
-        sideObliques2 = self.returnExercise(sideObliques_copy)
-        lowerAbs1 = self.returnExercise(lowerAbs_copy)
-        lowerAbs2 = self.returnExercise(lowerAbs_copy)
-        upperAbs1 = self.returnExercise(upperAbs_copy)
-        upperAbs2 = self.returnExercise(upperAbs_copy)
-        HIIT1 = self.returnExercise(absHIIT_copy)
-        HIIT2 = self.returnExercise(absHIIT_copy)
-        HIIT3 = self.returnExercise(absHIIT_copy)
-        HIIT4 = self.returnExercise(absHIIT_copy)
+        # Helper function to safely get exercises
+        def safe_return_exercise(group_copy):
+            return self.returnExercise(group_copy) if group_copy else "No exercise available"
+
+        sideObliques1 = safe_return_exercise(sideObliques_copy)
+        sideObliques2 = safe_return_exercise(sideObliques_copy)
+        lowerAbs1 = safe_return_exercise(lowerAbs_copy)
+        lowerAbs2 = safe_return_exercise(lowerAbs_copy)
+        upperAbs1 = safe_return_exercise(upperAbs_copy)
+        upperAbs2 = safe_return_exercise(upperAbs_copy)
+        HIIT1 = safe_return_exercise(absHIIT_copy)
+        HIIT2 = safe_return_exercise(absHIIT_copy)
+        HIIT3 = safe_return_exercise(absHIIT_copy)
+        HIIT4 = safe_return_exercise(absHIIT_copy)
 
         self.absWO["Lower Abs 1"] = lowerAbs1
         self.absWO["Obliques (side) 1"] = sideObliques1
