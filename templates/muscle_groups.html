@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Select a Muscle Group</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Select a Muscle Group</h1>
+        <form method="POST" action="{{ url_for('custom_workout') }}">
+            <div class="form-group">
+                <label for="muscleGroup">Choose a muscle group:</label>
+                <select class="form-control" id="muscleGroup" name="muscle_group">
+                    <option value="pull">Pull</option>
+                    <option value="push">Push</option>
+                    <option value="legs">Legs</option>
+                    <option value="biceps">Biceps</option>
+                    <option value="abs">Abs</option>
+                    <option value="shoulders">Shoulders</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <!-- Add button to go back to the default workout -->
+        <form method="POST" action="{{ url_for('reset_default') }}">
+            <button type="submit" class="btn btn-secondary mt-3">Go Back to Default Workout</button>
+        </form>
+        <a href="{{ url_for('index') }}">Back to Home</a>
+    </div>
+</body>
+</html>
