@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ group.capitalize() }} Workout</title>
+</head>
+<body>
+    <h1>{{ group.capitalize() }} Workout</h1>
+    <form method="POST">
+        <ul>
+            {% for exercise, details in workout_plan.items() %}
+            <li>
+                <span>{{ exercise }}: {{ details }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+        <button type="submit">Check In</button>
+    </form>
+    <a href="{{ url_for('index') }}">Go Back</a>
+</body>
+</html>

@@ -11,8 +11,11 @@ import os
 app = Flask(__name__)
 app.secret_key = os.urandom(24)  # Securely generated secret key
 
+
 def get_todays_workout():
     day_of_week = datetime.datetime.now().strftime("%A")
+
+    # Define workout plans for each day
     workout_plans = {
         "Monday": PullDay(),
         "Tuesday": Biceps(),
@@ -22,7 +25,9 @@ def get_todays_workout():
         "Saturday": Abs()
     }
 
+    # Generate the workout plan based on the day of the week
     workout_plan = workout_plans.get(day_of_week, None)
+
     if workout_plan:
         if day_of_week == "Monday":
             plan = workout_plan.pullDay()
@@ -41,12 +46,29 @@ def get_todays_workout():
         return day_of_week, plan
     return day_of_week, {}
 
-# Global Variable declaration for workout
-today, workout_plan = get_todays_workout()
+
+@app.before_request
+def store_todays_workout_in_session():
+    # Get the current date (e.g., '2024-09-07')
+    today_date = datetime.datetime.now().strftime("%Y-%m-%d")
+
+    # Check if today's date and workout plan are already in the session
+    if 'workout_plan_date' not in session or session['workout_plan_date'] != today_date:
+        # If not, generate a new workout plan and store it in session
+        today, workout_plan = get_todays_workout()
+        session['workout_plan_date'] = today_date
+        session['workout_plan'] = workout_plan
+        session['today'] = today  # Store the current day (e.g., 'Monday')
+
 
 @app.route('/')
 def index():
+    # Retrieve the stored workout plan and day from the session
+    today = session.get('today', 'No workout day')
+    workout_plan = session.get('workout_plan', {})
+
     return render_template('index.html', today=today, workout_plan=workout_plan)
+
 
 @app.route('/checkin', methods=['GET', 'POST'])
 def checkin():
@@ -56,8 +78,14 @@ def checkin():
         flash("Your check-in has been recorded!")
         return redirect(url_for('index'))
 
+    # Retrieve the stored workout plan and day from the session
+    today = session.get('today', 'No workout day')
+    workout_plan = session.get('workout_plan', {})
     completed_exercises = request.form.getlist('completed_workouts')
-    return render_template('checkin.html', today=today, workout_plan=workout_plan, completed_workouts=completed_exercises)
+
+    return render_template('checkin.html', today=today, workout_plan=workout_plan,
+                           completed_workouts=completed_exercises)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

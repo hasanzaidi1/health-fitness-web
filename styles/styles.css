@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Today's Workout</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
+body {
     background-color: #f8f9fa;
     font-family: 'Roboto', sans-serif;
 }
@@ -116,24 +107,3 @@ input[type="checkbox"] {
     text-align: center;
     font-size: 18px;
 }
-
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="workout-card">
-            <h1>Today's Workout</h1>
-            <h2 class="day-title">{{ today }}</h2>
-            <h3>Your workout is:</h3>
-            <ul class="exercise-list">
-                {% for category, details in workout_plan.items() %}
-                <li class="exercise-item">
-                    <span>{{ category }}:</span> {{ details }}
-                </li>
-                {% endfor %}
-            </ul>
-            <a href="{{ url_for('checkin') }}" class="btn btn-secondary">Check In</a>
-        </div>
-    </div>
-</body>
-</html>
