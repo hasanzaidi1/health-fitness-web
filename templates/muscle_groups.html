@@ -22,6 +22,10 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+        <!-- Add button to go back to the default workout -->
+        <form method="POST" action="{{ url_for('reset_default') }}">
+            <button type="submit" class="btn btn-secondary mt-3">Go Back to Default Workout</button>
+        </form>
         <a href="{{ url_for('index') }}">Back to Home</a>
     </div>
 </body>

@@ -66,7 +66,6 @@ def index():
     # Retrieve the stored workout plan and day from the session
     today = session.get('today', 'No workout day')
     workout_plan = session.get('workout_plan', {})
-
     return render_template('index.html', today=today, workout_plan=workout_plan)
 
 
@@ -114,6 +113,17 @@ def custom_workout():
         return redirect(url_for('index'))  # Redirect back to the homepage with the custom workout
 
     return render_template('muscle_groups.html')
+
+
+@app.route('/reset_default', methods=['POST'])
+def reset_default():
+    # Regenerate today's workout and store it in the session
+    today, workout_plan = get_todays_workout()
+    session['workout_plan'] = workout_plan
+    session['today'] = today  # Store the default day
+
+    # Redirect to the index page to show the default workout
+    return redirect(url_for('index'))
 
 
 if __name__ == "__main__":
