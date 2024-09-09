@@ -2,57 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select Muscle Group</title>
+    <title>Select a Muscle Group</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f8f9fa;
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .group-button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-bottom: 10px;
-            text-align: center;
-            text-decoration: none;
-        }
-        .group-button:hover {
-            background-color: #0056b3;
-        }
-        .back-link {
-            display: block;
-            margin-top: 20px;
-            text-align: center;
-            text-decoration: none;
-            color: #007bff;
-        }
-        .back-link:hover {
-            text-decoration: underline;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Select Muscle Group</h1>
-        <a href="{{ url_for('workout', group='PullDay') }}" class="group-button">Pull Day</a>
-        <a href="{{ url_for('workout', group='PushDay') }}" class="group-button">Push Day</a>
-        <a href="{{ url_for('workout', group='LegsWorkout') }}" class="group-button">Legs Workout</a>
-        <a href="{{ url_for('workout', group='Biceps') }}" class="group-button">Biceps</a>
-        <a href="{{ url_for('workout', group='Abs') }}" class="group-button">Abs</a>
-        <a href="{{ url_for('workout', group='Shoulders') }}" class="group-button">Shoulders</a>
-        <a href="{{ url_for('index') }}" class="back-link">Go Back</a>
+        <h1>Select a Muscle Group</h1>
+        <form method="POST" action="{{ url_for('custom_workout') }}">
+            <div class="form-group">
+                <label for="muscleGroup">Choose a muscle group:</label>
+                <select class="form-control" id="muscleGroup" name="muscle_group">
+                    <option value="pull">Pull</option>
+                    <option value="push">Push</option>
+                    <option value="legs">Legs</option>
+                    <option value="biceps">Biceps</option>
+                    <option value="abs">Abs</option>
+                    <option value="shoulders">Shoulders</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <a href="{{ url_for('index') }}">Back to Home</a>
     </div>
 </body>
 </html>

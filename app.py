@@ -86,6 +86,35 @@ def checkin():
     return render_template('checkin.html', today=today, workout_plan=workout_plan,
                            completed_workouts=completed_exercises)
 
+@app.route('/custom', methods=['GET', 'POST'])
+def custom_workout():
+    if request.method == 'POST':
+        selected_group = request.form.get('muscle_group')
+
+        # Generate workout plan based on selected group
+        if selected_group == "pull":
+            workout_plan = PullDay().pullDay()
+        elif selected_group == "push":
+            workout_plan = PushDay().pushDay()
+        elif selected_group == "legs":
+            workout_plan = LegsWorkout().legDay()
+        elif selected_group == "biceps":
+            workout_plan = Biceps().bicepDay()
+        elif selected_group == "abs":
+            workout_plan = Abs().abs()
+        elif selected_group == "shoulders":
+            workout_plan = Shoulders().shoulderDay()
+        else:
+            workout_plan = {}
+
+        # Store the custom workout in session
+        session['workout_plan'] = workout_plan
+        session['today'] = selected_group.capitalize()
+
+        return redirect(url_for('index'))  # Redirect back to the homepage with the custom workout
+
+    return render_template('muscle_groups.html')
+
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -117,6 +117,11 @@ input[type="checkbox"] {
     font-size: 18px;
 }
 
+.custom {
+    color: black;
+    background-color: yellowgreen;
+}
+
     </style>
 </head>
 <body>
@@ -133,6 +138,7 @@ input[type="checkbox"] {
                 {% endfor %}
             </ul>
             <a href="{{ url_for('checkin') }}" class="btn btn-secondary">Check In</a>
+            <a href="{{ url_for('custom_workout') }}" class="btn btn-secondary custom">Custom Workout</a>
         </div>
     </div>
 </body>
