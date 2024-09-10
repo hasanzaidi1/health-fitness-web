@@ -49,23 +49,21 @@ def get_todays_workout():
 
 @app.before_request
 def store_todays_workout_in_session():
-    # Get the current date (e.g., '2024-09-07')
     today_date = datetime.datetime.now().strftime("%Y-%m-%d")
 
-    # Check if today's date and workout plan are already in the session
     if 'workout_plan_date' not in session or session['workout_plan_date'] != today_date:
-        # If not, generate a new workout plan and store it in session
         today, workout_plan = get_todays_workout()
+        print(f'store_todays_workout_in_session workout plan is {workout_plan}')
         session['workout_plan_date'] = today_date
         session['workout_plan'] = workout_plan
-        session['today'] = today  # Store the current day (e.g., 'Monday')
+        session['today'] = today
 
 
 @app.route('/')
 def index():
-    # Retrieve the stored workout plan and day from the session
     today = session.get('today', 'No workout day')
     workout_plan = session.get('workout_plan', {})
+    print(f'index workout plan is {workout_plan}')
     return render_template('index.html', today=today, workout_plan=workout_plan)
 
 
@@ -73,15 +71,13 @@ def index():
 def checkin():
     if request.method == 'POST':
         completed_exercises = request.form.getlist('completed_workouts')
-        # Save completed_exercises to session or database if needed
         flash("Your check-in has been recorded!")
         return redirect(url_for('index'))
 
-    # Retrieve the stored workout plan and day from the session
     today = session.get('today', 'No workout day')
     workout_plan = session.get('workout_plan', {})
     completed_exercises = request.form.getlist('completed_workouts')
-
+    print(f'checkin workout plan is {workout_plan}')
     return render_template('checkin.html', today=today, workout_plan=workout_plan,
                            completed_workouts=completed_exercises)
 
@@ -109,20 +105,18 @@ def custom_workout():
         # Store the custom workout in session
         session['workout_plan'] = workout_plan
         session['today'] = selected_group.capitalize()
-
-        return redirect(url_for('index'))  # Redirect back to the homepage with the custom workout
+        print(f'custom workout plan is {workout_plan}')
+        return redirect(url_for('index'))
 
     return render_template('muscle_groups.html')
 
 
 @app.route('/reset_default', methods=['POST'])
 def reset_default():
-    # Regenerate today's workout and store it in the session
     today, workout_plan = get_todays_workout()
     session['workout_plan'] = workout_plan
-    session['today'] = today  # Store the default day
-
-    # Redirect to the index page to show the default workout
+    session['today'] = today
+    print(f'resetting to default workout plan {workout_plan}')
     return redirect(url_for('index'))
 
 
