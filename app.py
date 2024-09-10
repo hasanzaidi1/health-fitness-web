@@ -11,22 +11,23 @@ import os
 app = Flask(__name__)
 app.secret_key = os.urandom(24)  # Securely generated secret key
 
+day_of_week = datetime.datetime.now().strftime("%A")
+
+# Define workout plans for each day
+workout_plans = {
+    "Monday": PullDay(),
+    "Tuesday": Biceps(),
+    "Wednesday": LegsWorkout(),
+    "Thursday": PushDay(),
+    "Friday": Shoulders(),
+    "Saturday": Abs()
+}
+
+# Generate the workout plan based on the day of the week
+workout_plan = workout_plans.get(day_of_week, None)
+
 
 def get_todays_workout():
-    day_of_week = datetime.datetime.now().strftime("%A")
-
-    # Define workout plans for each day
-    workout_plans = {
-        "Monday": PullDay(),
-        "Tuesday": Biceps(),
-        "Wednesday": LegsWorkout(),
-        "Thursday": PushDay(),
-        "Friday": Shoulders(),
-        "Saturday": Abs()
-    }
-
-    # Generate the workout plan based on the day of the week
-    workout_plan = workout_plans.get(day_of_week, None)
 
     if workout_plan:
         if day_of_week == "Monday":
