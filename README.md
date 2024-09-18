@@ -51,8 +51,8 @@ Follow these instructions to set up the project on your local machine.
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/hasanzaidi1/flaskProject.git
-   cd flaskProject
+   git clone https://github.com/hasanzaidi1/health_fitness_web_app.git
+   cd health_fitness_web_app
 2. **Install the required dependencies**:
    
    ```bash
