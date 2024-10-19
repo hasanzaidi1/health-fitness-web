@@ -1,6 +1,6 @@
 # Workout Planner App
 
-A web-based fitness app that allows users to view and check in on daily workout routines. The app provides a default workout plan based on the day of the week and allows users to customize their workout by selecting different muscle groups. Users can also revert to the default workout for the day at any time.
+A web-based fitness app that allows users to view and check in on daily workout routines. The app provides a default workout plan based on the day of the week and allows users to customize their workout by selecting different muscle groups. Users can also revert to the default workout for the day at any time. At the end of each month, the database is queried to identify the most frequently skipped exercises. Based on this analysis, new exercise sets are created that incorporate these skipped exercises, utilizing lighter weights to encourage engagement and improve participation.
 
 ## Features
 
